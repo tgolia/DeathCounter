@@ -8,9 +8,22 @@
     deathFactory.$inject = ['$http'];
 
     function deathFactory($http) {
+        var vm = this;
         var service = {
-            getDeathCountdown: getDeathCountdown,
-            getById: getById
+            getDeathCountdown  : getDeathCountdown,
+            hideOrShowQuestion : hideOrShowQuestion,
+            nextQuestion       : nextQuestion
+        };
+
+        var questions = {
+            header    : true,
+            question1 : false,
+            question2 : false,
+            question3 : false,
+            question4 : false,
+            question5 : false,
+            question6 : false,
+            question7 : false
         };
 
         return service;
@@ -18,7 +31,6 @@
         ///////////////////
 
         function getDeathCountdown(gender, dob) {
-            console.log("countdown function");
             return $http.get('https://life-left.p.mashape.com/time-left?birth=' + dob + '&gender=' + gender, {
                 headers: {
                     'X-Mashape-Key': 'YOD7hj7GoXmshmDUKeE5aaZwaZa8p1llKS9jsnrSdjNjakn0tv'
@@ -26,10 +38,15 @@
             }); //this returns promise that will either get fulfilled (.then) or rejected (.catch)
         }
 
-        function getById(imdbId) {
-            console.log("getById function");
-            return $http.get('http://omdbapi.com/?i=' + imdbId);
+        function hideOrShowQuestion(questionNum) {
+            return questions[questionNum];
         }
+
+        function nextQuestion(currentQuestion, nextQuestion) {
+            questions[currentQuestion] = false;
+            questions[nextQuestion] = true;
+        }
+
     }
 
 })();

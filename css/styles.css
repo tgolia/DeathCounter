@@ -1,0 +1,15 @@
+.jumbotron {
+	position: absolute !important;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+
+.btn-primary {
+	margin: 0 auto;
+	display: block;
+}
+
+input {
+	font-size: 400%;
+}

@@ -7,8 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Title Page</title>
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bower_components/animate.css/animate.min.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css">
+    <link rel="stylesheet" href="css/styles.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -19,62 +21,81 @@
 
 <body ng-controller="DeathController as death">
     <div class="container">
-        <div class="well text-center">
-            <h1>{{death.header}}</h1>
-            <p class="lead">{{death.subHeader}}</p>
-        </div>
-        <form ng-show="death.showHomeStatus">
-            <div class="form-group">
-                <label for="exampleInputEmail1"><b>Gender?</b></label>
-                <div class="form-check">
-                    <input type="radio" ng-model="death.gender" value="male" class="form-check-input"> Mail
-                    <br>
-                    <input type="radio" ng-model="death.gender" value="female" class="form-check-input"> Femail
-                    <br>
-                    <input type="radio" ng-model="death.gender" value="other" class="form-check-input"> Other
-                </div>
-                <br>
-                <p><b>Date of birth</b></p>
-                <input class="form-control" ng-model="death.dob" placeholder="e.g. 12/16/89">
-                <hr style="border: 1px solid lightgrey">
-                <br>
-                <p><b>What percentage of the time do you turn your blinker on when merging lanes?</b></p>
-                <input class="form-control" aria-describedby="emailHelp" placeholder="e.g. 50%">
-                <small id="emailHelp" class="form-text text-muted">Please be honest. Death is counting on you.</small>
-            </div>
-            <div class="form-group">
-                <p><b>Do you have a cat?</b></p>
-                <input class="form-control" placeholder="Yes/No/Not Sure">
-            </div>
-            <div class="form-group">
-                <p><b>What's your favorite color?</b></p>
-                <select class="form-control">
-                    <option>Green</option>
-                    <option>Purple Mountain's Majesty</option>
-                    <option>Mango</option>
-                    <option>Trump Orange</option>
-                    <option>British</option>
-                </select>
-            </div>
-            <div class="form-check">
-                <p><b>Do you know any humans or animals with the following names?</b></p>
-                <input class="form-check-input" type="checkbox"> Harambe
-                <br>
-                <input class="form-check-input" type="checkbox"> Zolton
-                <br>
-                <input class="form-check-input" type="checkbox"> Jessica (Jessie counts!)
-                <br>
-                <input class="form-check-input" type="checkbox"> Eunice
-                <br>
-                <input class="form-check-input" type="checkbox"> Robert Paulson
+        <div class="jumbotron" ng-show="death.hideOrShowQuestion('header')">
+            <div class="text-center">
+                <h1>{{death.header}}</h1>
+                <p class="lead">{{death.subHeader}}</p>
             </div>
             <br>
-            <div class="form-group">
-                <p><b>Tell us your life story in 10 words or less.</b></p>
-                <textarea class="form-control" rows="2" placeholder="e.g. I like eating food, Moutain Dew and playing video games."></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary" ng-click="death.showLoading(); death.getCountdown(death.gender,death.dob)">Submit</button>
-        </form>
+            <br>
+            <button type="submit" class="btn-primary btn btn-lg" ng-click="death.nextQuestion('header','question1')">Death me!</button>
+        </div>
+        <div class="jumbotron text-center" id="question1" ng-show="death.hideOrShowQuestion('question1')">
+            <h1><b>Gender?</b></h1>
+                <br>
+                <h3><input type="radio" ng-model="death.gender" value="male" class="form-check-input"> Mail</h3>
+                <h3><input type="radio" ng-model="death.gender" value="female" class="form-check-input"> Femail</h3>
+            <br>
+            <br>
+            <button type="submit" class="btn-primary btn btn-lg" ng-if="death.gender != ''" ng-click="death.nextQuestion('question1','question2')">Next Question</button>
+        </div>
+        <div class="jumbotron" id="question2" ng-show="death.hideOrShowQuestion('question2')">
+            <p><b>Date of birth</b></p>
+            <input class="form-control" ng-model="death.dob" placeholder="e.g. 12/16/89">
+            <br>
+            <br>
+            <button type="submit" class="btn-primary btn btn-lg" ng-click="death.getCountdown(death.gender,death.dob); death.nextQuestion('question2','question3')">Next Question</button>
+        </div>
+        <div class="jumbotron" id="question3" ng-show="death.hideOrShowQuestion('question3')">
+            <p><b>What percentage of the time do you turn your blinker on when merging lanes?</b></p>
+            <input class="form-control" placeholder="e.g. 50%">
+            <small class="form-text text-muted">Please be honest. Death is counting on you.</small>
+            <br>
+            <br>
+            <button type="submit" class="btn-primary btn btn-lg" ng-click="death.nextQuestion('question3','question4')">Next Question</button>
+        </div>
+        <div class="jumbotron" id="question4" ng-show="death.hideOrShowQuestion('question4')">
+            <p><b>Do you have a cat?</b></p>
+            <input class="form-control" placeholder="Yes/No/Not Sure">
+            <br>
+            <br>
+            <button type="submit" class="btn-primary btn btn-lg" ng-click="death.nextQuestion('question4','question5')">Next Question</button>
+        </div>
+        <div class="jumbotron" id="question5" ng-show="death.hideOrShowQuestion('question5')">
+            <p><b>What's your favorite color?</b></p>
+            <select class="form-control">
+                <option>Green</option>
+                <option>Purple Mountain's Majesty</option>
+                <option>Mango</option>
+                <option>Trump Orange</option>
+                <option>British</option>
+            </select>
+            <br>
+            <br>
+            <button type="submit" class="btn-primary btn btn-lg" ng-click="death.nextQuestion('question5','question6')">Next Question</button>
+        </div>
+        <div class="jumbotron" id="question6" ng-show="death.hideOrShowQuestion('question6')">
+            <p><b>Do you know any humans or animals with the following names?</b></p>
+            <input class="form-check-input" type="checkbox"> Harambe
+            <br>
+            <input class="form-check-input" type="checkbox"> Zolton
+            <br>
+            <input class="form-check-input" type="checkbox"> Jessica (Jessie counts!)
+            <br>
+            <input class="form-check-input" type="checkbox"> Eunice
+            <br>
+            <input class="form-check-input" type="checkbox"> Robert Paulson
+            <br>
+            <br>
+            <button type="submit" class="btn-primary btn btn-lg" ng-click="death.nextQuestion('question6','question7')">Next Question</button>
+        </div>
+        <div class="jumbotron" id="question7" ng-show="death.hideOrShowQuestion('question7')">
+            <p><b>Tell us your life story in 10 words or less.</b></p>
+            <textarea class="form-control" rows="2" placeholder="e.g. I like eating food, Moutain Dew and playing video games."></textarea>
+            <br>
+            <button type="submit" class="btn-primary btn btn-lg" ng-click="death.showLoading(); death.nextQuestion('question7')">Submit</button>
+        </div>
+        <!-- </form> -->
         <br>
         <br>
         <br>
@@ -82,10 +103,8 @@
     <div class="container text-center" ng-show="death.showLoadingStatus">
         <h1> ARE YOU SURE YOU WANT TO KNOW THIS INFORMATION?</h1>
         <p><b>You can still turn back now!</b></p>
-        <!--<button type="submit" ng-click="death.showResults()" class="btn btn-primary">Show Results</button>-->
-        <!--<button type="submit" ng-click="death.showResults()" class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="just kidding you gona die">Go back?</button>-->
         <p>Pensive Gorilla ponders your fate.</p>
-        <img src="http://i.dailymail.co.uk/i/pix/2012/04/12/article-2128724-128FA522000005DC-36_964x652.jpg">
+        <img class="img-circle" src="http://i.dailymail.co.uk/i/pix/2012/04/12/article-2128724-128FA522000005DC-36_964x652.jpg">
     </div>
     <br>
     <br>
@@ -94,17 +113,15 @@
         <h1 class="text-center">Congratulations You are going to die!</h1>
         <h4>In exactly {{death.results.dateString}}</h4>
         <p>We are sorry about that, here is representation of your life in one simple cat Gif</p>
-
-        <img ng-click="death.showHome()" style="cursor: pointer; cursor: hand;" src="http://www.gifbin.com/bin/122011/1324316240_cat_jumps_off_balcony_ledge.gif">
+        <img class="img-circle" ng-click="death.showHome()" style="cursor: pointer; cursor: hand;" src="http://www.gifbin.com/bin/122011/1324316240_cat_jumps_off_balcony_ledge.gif">
         <br>
         <h1>Where are you going to be wasting your life away in these next {{death.results.date.years}} years?</h1>
         <ul style="list-style-type: circle;align-items: center;">
             <li>{{death.hoursWaiting}} hrs waiting in line. Wow...</li>
             <li>{{death.hoursFacebook | number:0}} hrs on Facebook....</li>
             <li>{{death.hoursWorking | number:0}} hrs working for the man (Trump).</li>
-            <li ng-if="death.gender == 'female'" >{{death.hoursSelfies | number:0}} hrs taking selfies #nofilter #youredying</li>
+            <li ng-if="death.gender == 'female'">{{death.hoursSelfies | number:0}} hrs taking selfies #nofilter #youredying</li>
         </ul>
-        
     </div>
     <br>
     <br>
