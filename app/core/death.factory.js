@@ -12,19 +12,24 @@
         var service = {
             getDeathCountdown  : getDeathCountdown,
             hideOrShowQuestion : hideOrShowQuestion,
-            nextQuestion       : nextQuestion
+            nextQuestion       : nextQuestion,
+            rotateFacts        : rotateFacts,
+            hideOrShowFact     : hideOrShowFact
         };
 
         var questions = {
-            header    : true,
-            question1 : false,
-            question2 : false,
-            question3 : false,
-            question4 : false,
-            question5 : false,
-            question6 : false,
-            question7 : false
+            header: true,
+            question1: false,
+            question2: false,
+            question3: false,
+            question4: false,
+            question5: false,
+            question6: false,
+            question7: false,
         };
+
+        var facts = [true, false, false, false];
+        var i = 0;
 
         return service;
 
@@ -47,8 +52,31 @@
             questions[nextQuestion] = true;
         }
 
-    }
+        function rotateFacts() {
+            facts[i%facts.length] = false;
+            if (i%facts.length === 3) {
+                facts[i%facts.length - 3] = true;
+            } else {
+                facts[i%facts.length + 1] = true;
+            }
+            i++;
+        }
+            //         setTimeout(function() {
+            //     console.log(i);
+            //     facts[i%facts.length] = false;
+            //     facts[i%facts.length + 1] = true;
+            //     i++;
+            //     if (i<rotations) {
+            //         rotateFacts(rotations)
+            //     }
+            // }, 2000)
+            // facts[i % facts.length] = false;
+            // facts[i % facts.length + 1] = true;
 
+        function hideOrShowFact(index) {
+            return facts[index];
+        }
+    }
 })();
 
 //CHECK IT OUT

@@ -1,8 +1,13 @@
+body {
+	background-color: lightyellow; 
+}
+
 .jumbotron {
 	position: absolute !important;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%,-50%);
+/*	opacity: .5;*/
 }
 
 .btn-primary {
@@ -12,4 +17,47 @@
 
 input {
 	font-size: 400%;
+}
+
+/*body{
+	text-align: center;
+	background: #00ECB9;
+  font-family: sans-serif;
+  font-weight: 100;
+}
+
+h1{
+  color: #396;
+  font-weight: 100;
+  font-size: 40px;
+  margin: 40px 0px 20px;
+}*/
+
+#clockdiv{
+	font-family: sans-serif;
+	color: #fff;
+	display: inline-block;
+	font-weight: 100;
+	text-align: center;
+	font-size: 30px;
+}
+
+#clockdiv > div{
+	padding: 10px;
+	border-radius: 3px;
+	background: red;
+	display: inline-block;
+}
+
+#clockdiv div > span{
+	padding: 15px;
+	border-radius: 3px;
+	background: pink;
+	display: inline-block;
+	color: black;
+}
+
+.smalltext{
+	padding-top: 5px;
+	font-size: 16px;
 }

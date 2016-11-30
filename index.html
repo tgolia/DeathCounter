@@ -32,9 +32,9 @@
         </div>
         <div class="jumbotron text-center" id="question1" ng-show="death.hideOrShowQuestion('question1')">
             <h1><b>Gender?</b></h1>
-                <br>
-                <h3><input type="radio" ng-model="death.gender" value="male" class="form-check-input"> Mail</h3>
-                <h3><input type="radio" ng-model="death.gender" value="female" class="form-check-input"> Femail</h3>
+            <br>
+            <h3><input type="radio" ng-model="death.gender" value="male" class="form-check-input"> Mail</h3>
+            <h3><input type="radio" ng-model="death.gender" value="female" class="form-check-input"> Femail</h3>
             <br>
             <br>
             <button type="submit" class="btn-primary btn btn-lg" ng-if="death.gender != ''" ng-click="death.nextQuestion('question1','question2')">Next Question</button>
@@ -44,7 +44,7 @@
             <input class="form-control" ng-model="death.dob" placeholder="e.g. 12/16/89">
             <br>
             <br>
-            <button type="submit" class="btn-primary btn btn-lg" ng-click="death.getCountdown(death.gender,death.dob); death.nextQuestion('question2','question3')">Next Question</button>
+            <button type="submit" class="btn-primary btn btn-lg" ng-click="death.getDeathCountdown(death.gender,death.dob)">Next Question</button>
         </div>
         <div class="jumbotron" id="question3" ng-show="death.hideOrShowQuestion('question3')">
             <p><b>What percentage of the time do you turn your blinker on when merging lanes?</b></p>
@@ -93,7 +93,7 @@
             <p><b>Tell us your life story in 10 words or less.</b></p>
             <textarea class="form-control" rows="2" placeholder="e.g. I like eating food, Moutain Dew and playing video games."></textarea>
             <br>
-            <button type="submit" class="btn-primary btn btn-lg" ng-click="death.showLoading(); death.nextQuestion('question7')">Submit</button>
+            <button type="submit" class="btn-primary btn btn-lg" ng-click="death.showLoading('clockdiv',death.results.date); death.nextQuestion('question7')">Submit</button>
         </div>
         <!-- </form> -->
         <br>
@@ -109,19 +109,53 @@
     <br>
     <br>
     <br>
-    <div class="container text-center" ng-show="death.showResultsStatus">
-        <h1 class="text-center">Congratulations You are going to die!</h1>
-        <h4>In exactly {{death.results.dateString}}</h4>
-        <p>We are sorry about that, here is representation of your life in one simple cat Gif</p>
-        <img class="img-circle" ng-click="death.showHome()" style="cursor: pointer; cursor: hand;" src="http://www.gifbin.com/bin/122011/1324316240_cat_jumps_off_balcony_ledge.gif">
+    <div class="container text-center" ng-show="death.showResultsStatus" style="margin-top: -100px;">
+        <h1 class="text-center" style="font-size: 500%;">Congrats, you're going to die!</h1>
+        <img class="img-circle" ng-click="death.showHome()" style="cursor: pointer; cursor: hand;" ng-src="http://www.gifbin.com/bin/122011/1324316240_cat_jumps_off_balcony_ledge.gif">
+        <h1>This is how much time you have left to live:</h1>
+        <div id="clockdiv">
+            <div>
+                <span class="years"></span>
+                <div class="smalltext">Years</div>
+            </div>
+            <div>
+                <span class="days"></span>
+                <div class="smalltext">Days</div>
+            </div>
+            <div>
+                <span class="hours"></span>
+                <div class="smalltext">Hours</div>
+            </div>
+            <div>
+                <span class="minutes"></span>
+                <div class="smalltext">Minutes</div>
+            </div>
+            <div>
+                <span class="seconds"></span>
+                <div class="smalltext">Seconds</div>
+            </div>
+        </div>
+        <!--    <h4>In exactly {{death.results.dateString}}</h4> -->
         <br>
-        <h1>Where are you going to be wasting your life away in these next {{death.results.date.years}} years?</h1>
-        <ul style="list-style-type: circle;align-items: center;">
+        <h1>How are you going to be wasting your life away in these next {{death.results.date.years}} years?</h1>
+<!--         <ul style="list-style-type: circle;align-items: center;">
             <li>{{death.hoursWaiting}} hrs waiting in line. Wow...</li>
             <li>{{death.hoursFacebook | number:0}} hrs on Facebook....</li>
             <li>{{death.hoursWorking | number:0}} hrs working for the man (Trump).</li>
             <li ng-if="death.gender == 'female'">{{death.hoursSelfies | number:0}} hrs taking selfies #nofilter #youredying</li>
-        </ul>
+        </ul> -->
+        <div class="panel" ng-show="death.f1Status">
+            <div class="panel-heading panel-info">{{death.hoursWaiting}} hrs waiting in line. Wow...</div>
+        </div>
+        <div class="panel" ng-show="death.f2Status">
+            <div class="panel-heading panel-info">{{death.hoursFacebook | number:0}} hrs on Facebook....</div>
+        </div>
+        <div class="panel" ng-show="death.f3Status">
+            <div class="panel-heading panel-info">{{death.hoursWorking | number:0}} hrs working for the man (Trump).</div>
+        </div>
+        <div class="panel" ng-show="death.f4Status">
+            <div class="panel-heading panel-info">{{death.hoursSelfies | number:0}} hrs taking selfies #nofilter #youredying</div>
+        </div>
     </div>
     <br>
     <br>
